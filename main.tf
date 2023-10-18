@@ -6,7 +6,6 @@ resource "aws_instance" "instance" {
   tags = {
     Name = var.name
   }
-
 }
 
 resource "aws_route53_record" "record" {
@@ -17,16 +16,14 @@ resource "aws_route53_record" "record" {
   records = [aws_instance.instance.private_ip]
 }
 
-
-
 resource "null_resource" "ansible" {
 
   depends_on = [
     aws_route53_record.record
   ]
 
-  provisioner "local-exec" {
-    command = <<EOF
+provisioner "local-exec" {
+   command = <<EOF
 cd /root/p1-roboshop-ansible1
 git pull
 sleep 30
